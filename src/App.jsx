@@ -1,5 +1,5 @@
 import './assets/sass/index.scss'
-import { ConfigProvider, Button } from 'antd'
+import { Button } from 'antd'
 
 export default function App() {
   return (
