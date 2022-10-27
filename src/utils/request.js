@@ -1,10 +1,21 @@
 'use strict'
 import axios from 'axios'
 import qs from 'qs'
-import router from '@/router'
+import store from '@/redux'
 import { CONTENT_TYPE, SUCCESS_CODE, TIME_OUT, TOKEN_KEY } from '@/utils/constant'
 import { ContentType } from '@/utils/dictionary'
 import { getApiBaseUrl } from '@/utils'
+import { message } from 'antd'
+
+/**
+ * @description: 异常消息提示
+ * @param {string} string
+ * @return {*}
+ * @author: gumingchen
+ */
+const prompt = content => {
+  message.warning(content, 3)
+}
 
 /**
  * @description: code处理
@@ -13,9 +24,10 @@ import { getApiBaseUrl } from '@/utils'
  * @return {*}
  * @author: gumingchen
  */
-const codeHandle = (code, message) => {
+const codeHandle = (code, content) => {
   switch (code) {
     case 4001:
+      prompt(content)
       break
     case 401:
       break
@@ -24,6 +36,7 @@ const codeHandle = (code, message) => {
     case 500:
       break
     default:
+      prompt(content)
       break
   }
 }
@@ -54,9 +67,9 @@ const service = axios.create({
  */
 service.interceptors.request.use(
   config => {
-    const tokenVal = store.getters['administrator/tokenVal']
-    if (tokenVal) {
-      config.headers[TOKEN_KEY] = tokenVal
+    const { token } = store.getState().administrator.token
+    if (token) {
+      config.headers[TOKEN_KEY] = token
     }
     if (config.data) {
       if (config.headers['Content-Type'] === ContentType.FORM) {
@@ -98,6 +111,7 @@ service.interceptors.response.use(
     return response.data || null
   },
   error => {
+    console.log(error)
     if (error && error.response) {
       switch (error.response.status) {
         case 400:

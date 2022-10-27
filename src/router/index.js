@@ -11,13 +11,12 @@ const constant = [
   { path: '/401', element: lazyLoad('/constant/401') },
   { path: '/404', element: lazyLoad('/constant/404') },
   { path: '/500', element: lazyLoad('/constant/500') },
-  { path: '/', element: <Navigate to='/login' replace /> }
+  { path: '/', element: <Navigate to='/login' replace /> },
 ]
 
 const main = {
   element: lazyLoad('/layout'),
   children: [
-    { path: '/home', element: lazyLoad('/modules/home') },
   ]
 }
 
