@@ -40,7 +40,7 @@ function LoginForm(props) {
       }
       const r = await props.login(params)
       if (r) {
-        navigate('/home')
+        navigate('/redirect')
       }
       setLoading(false)
     }).catch(() => {

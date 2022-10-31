@@ -30,7 +30,6 @@ export const getMenuAndPermissionAsync = () => {
       setGet(false)
       dispatch(updateGet(false))
     }
-    console.log('获取到菜单')
     return r
   }
 }

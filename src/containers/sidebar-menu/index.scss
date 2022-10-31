@@ -1,0 +1,10 @@
+.sidebar-menu-container {
+  border-color: transparent;
+  &:not(.ant-menu-inline-collapsed) {
+    width: var(--gl-sidebar-width); // todo: 侧边栏的宽度
+  }
+}
+// 处理antd menu 折叠时菜单闪烁问题
+.ant-zoom-big-leave, .ant-zoom-big-leave-active {
+  display: none;
+}

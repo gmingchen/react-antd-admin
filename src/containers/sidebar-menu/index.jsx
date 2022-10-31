@@ -7,7 +7,7 @@ import { updateActive } from '@/redux/menu/action'
 import { Menu } from 'antd'
 import Iconfont from '@/components/iconfont'
 
-import style from './index.module.scss'
+import './index.scss'
 
 function handleMenuTree(list = []) {
   const result = []
@@ -29,7 +29,7 @@ function handleMenuTree(list = []) {
 }
 
 function SidebarMenu(props) {
-  const { active, menus, updateActive } = props
+  const { active, menus, collapse, updateActive } = props
 
   const navigate = useNavigate()
 
@@ -66,19 +66,22 @@ function SidebarMenu(props) {
 
   return (
     <Menu
-      defaultOpenKeys={active}
-      defaultSelectedKeys={active}
-      className={style.container}
+      // defaultOpenKeys={ active }
+      defaultSelectedKeys={ active }
+      selectedKeys={ active }
+      className='sidebar-menu-container'
+      inlineCollapsed={ collapse }
       mode="inline"
-      items={list}
-      onClick={handleClick} />
+      items={ list }
+      onClick={ handleClick } />
   )
 }
 
 export default connect(
   state => ({
     active: state.menu.active,
-    menus: state.menu.menus
+    menus: state.menu.menus,
+    collapse: state.menu.collapse
   }),
   {
     updateActive: updateActive

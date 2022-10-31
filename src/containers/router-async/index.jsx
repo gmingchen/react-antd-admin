@@ -1,11 +1,9 @@
 import { useEffect, lazy, useState } from 'react'
 import { connect } from 'react-redux'
-import { useRoutes, useLocation } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import routes from '@/router'
 
 import { getMenuAndPermissionAsync } from '@/redux/menu/action'
-
-import AuthRoute from '@/components/auth-route'
 
 /**
  * 路由懒加载
@@ -33,15 +31,15 @@ function handleRoutes(list) {
         break;
       case 3:
         route = {
-          path: `i-${item.menu_id}`,
-          element: "<AuthRoute path={ `i-${item.menu_id}` } element={ lazyLoad(`/iframe`) } />"
+          path: `/i-${item.menu_id}`,
+          element: lazyLoad(`/iframe`)
         }
         break;
       default:
         if (item.url && /\S/u.test(item.url)) {
           route = {
-            path: item.path.replace(/^\//, ''),
-            element: "<AuthRoute path={ item.path.replace(/^\//, '') } element={ lazyLoad(`/${ item.url }`) } />"
+            path: item.path,
+            element: lazyLoad(`/${ item.url }`)
           }
         }
         break;
@@ -57,57 +55,35 @@ function handleRoutes(list) {
   return result
 }
 
-/**
- * 获取路由
- * @param {*} path 路由路径
- * @param {*} routes 静态路由数组
- * @returns 
- */
-function handleRouteType(path, routes) {
-  return routes.some(route => route.path === path ) ? 'staic' : 'dynamic'
-}
 
 function Router(props) {
-  const { isGet, menus, getMenuAndPermission } = props
-
-  const { pathname } = useLocation()
+  const { menus } = props
 
   const [list, setList] = useState([])
-
-  const elements = useRoutes(routes)
-
-  /**
-   * 判断是否获取异步路由
-   */
-  const handleAsyncRoutes = async () => {
-    const type = handleRouteType(pathname, routes)
-    if (type === 'dynamic' && !isGet) {
-      await getMenuAndPermission()
-    }
-  }
-
-  handleAsyncRoutes()
 
   /**
    * 注册路由
    */
   const handleRegisterRoutes = () => {
-    // const routesAsync = handleRoutes(menus)
-    // const index = routes.length - 1
-    // const route = routes[index]
-    // const { children } = route
-    // route.children = [...children, ...routesAsync]
-    // setList(routes)
-    // console.log('************************************', routesAsync)
+    const routesAsync = handleRoutes(menus)
+    const index = routes.length - 1
+    const route = routes[index]
+    const { children } = route
+    result = [...children, ...routesAsync]
+    setList(result)
+    console.log('************************************', menus.length)
   }
 
   useEffect(() => {
-    setList(routes)
-  }, [])
+    handleRegisterRoutes()
+  }, [menus])
 
   return (
     <>
-      { elements }
+      <div>123</div>
+      {list.map(route => {
+        return <Route {...route} key={route.path || index} exact></Route>
+      })}
     </>
   )
 }

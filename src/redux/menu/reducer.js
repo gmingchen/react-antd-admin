@@ -14,7 +14,7 @@ const initState = {
   get: getGet(),
   menus: data[MENU_KEY],
   permissions: data[PERMISSION_KEY],
-  active: ['124', '123', '112'],
+  active: [],
   collapse: false
 }
 

@@ -1,0 +1,13 @@
+.logo-container {
+  height: var(--gl-headbar-height);
+  width: var(--gl-sidebar-width);
+  line-height: var(--gl-headbar-height);
+  background-color: var(--gl-sidebar-background-color);
+  transition: width 0.4s;
+  &-collapse {
+    width: var(--gl-sidebar-collapse-width);
+  }
+  .ant-image-img {
+    vertical-align: unset;
+  }
+}

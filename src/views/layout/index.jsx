@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Route, Routes, Outlet } from 'react-router-dom'
 
 import Init from '@/containers/init'
 import Sidebar from './components/sidebar'
@@ -7,8 +7,7 @@ import Active from './components/navigation/active'
 import Fixed from './components/navigation/fixed'
 import Headbar from './components/headbar'
 import Tabsbar from './components/tabsbar'
-
-import './index.module.scss'
+import RouterAsync from '@/containers/router-async'
 
 export default function() {
   return (

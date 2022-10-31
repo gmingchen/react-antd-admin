@@ -12,8 +12,10 @@ function Init(props) {
 
   useEffect(() => {
     getAdministrator()
-    // getMenuAndPermission(isGet)
     getEnterprise()
+    // if (!isGet) {
+    //   getMenuAndPermission()
+    // }
   }, [])
   
   return (
